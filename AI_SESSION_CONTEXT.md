@@ -55,6 +55,9 @@ The learner also wants runnable IntelliJ code labs during PC/Codex work.
 - Anki must be created as separate versioned files per topic/checkpoint, not one continuously growing file.
 - `animations/index.html` must use mostly Turkish explanations, slower animation timing, and beginner-friendly term explanations inside the visual.
 - `animations/index.html` must be button-controlled instead of auto-playing and should include light/dark mode support.
+- Topic explanations must keep `animations/index.html` current.
+- Animations should include a synchronized code/debug panel and a topic-specific interview question/senior answer panel.
+- Animation topics should be accessed through a left-side topic menu with only the selected topic panel visible.
 
 ## Required Outputs Per Topic
 

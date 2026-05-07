@@ -75,6 +75,19 @@ Animation quality criteria:
 - English labels may be present only as secondary interview terminology.
 - Must not auto-play by default. The learner should be able to move forward and backward with buttons.
 - Must include light/dark mode support and remember the selected theme when possible.
+- Must be updated as topics are explained; do not let explanations move ahead while animation artifacts stay stale.
+- Must include a synchronized code/debug panel when the topic involves code behavior.
+- The code/debug panel must show which code line or block corresponds to the current animation step.
+- Each topic animation must include a button or panel that shows the related interview question and a senior-level answer.
+- Desktop layout should keep the animation and IDE-like code/debug panel side by side when screen width allows.
+- Mobile layout must remain single-column, readable, and free of horizontal page overflow; code may scroll inside its own panel.
+- Code panels should look like an IDE: filename/header, line numbers, syntax coloring, active-line highlighting, and debug/result text.
+- Code panels should prefer JetBrains Mono, with Cascadia Mono/Consolas fallbacks, and use a readable size.
+- On desktop, the animation and IDE panes should be resizable with a draggable splitter when practical.
+- Animation topics should be navigated from a left-side topic menu rather than appended as one long continuous page.
+- The selected topic should show as a distinct panel/page; inactive topics should not occupy vertical space.
+- The left topic menu should be collapsible so it does not consume too much horizontal space.
+- Complex topics such as rollback rules must include multiple scenario cards, not just one generic rule card.
 
 ## Anki Rules
 

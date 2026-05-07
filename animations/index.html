@@ -18,6 +18,16 @@
       --soft-blue: #eef4ff;
       --soft-green: #eaf7f2;
       --soft-amber: #fff8eb;
+      --code-bg: #0f172a;
+      --code-top: #111827;
+      --code-line: #253247;
+      --code-ink: #dbeafe;
+      --code-muted: #94a3b8;
+      --code-keyword: #93c5fd;
+      --code-type: #67e8f9;
+      --code-method: #86efac;
+      --code-comment: #a8b3c2;
+      --split-left: 50%;
     }
 
     [data-theme="dark"] {
@@ -45,7 +55,7 @@
     }
 
     header {
-      padding: 24px clamp(16px, 4vw, 44px);
+      padding: 22px clamp(16px, 4vw, 42px);
       background: var(--panel);
       border-bottom: 1px solid var(--line);
     }
@@ -63,49 +73,194 @@
       letter-spacing: 0;
     }
 
-    .subtitle {
-      margin: 0;
-      max-width: 1040px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    main {
-      padding: 24px clamp(16px, 4vw, 44px) 48px;
-      display: grid;
-      gap: 24px;
-    }
-
-    section {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 20px;
-    }
-
     h2 {
       margin: 0 0 8px;
       font-size: 22px;
       letter-spacing: 0;
     }
 
+    .subtitle,
     .topic-note {
-      margin: 0 0 18px;
-      max-width: 980px;
+      margin: 0;
       color: var(--muted);
       line-height: 1.55;
     }
 
-    .layout {
+    .topic-note {
+      max-width: 1100px;
+      margin-bottom: 18px;
+    }
+
+    main {
+      padding: 24px clamp(14px, 4vw, 42px) 48px;
+    }
+
+    .app-shell {
       display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
-      gap: 16px;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .app-shell.menu-collapsed {
+      grid-template-columns: 56px minmax(0, 1fr);
+    }
+
+    .topic-menu {
+      position: sticky;
+      top: 16px;
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .topic-menu h2 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .menu-toggle {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      flex: 0 0 auto;
+    }
+
+    .topic-tab {
+      width: 100%;
+      text-align: left;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .topic-index {
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      margin-right: 8px;
+      border-radius: 6px;
+      background: var(--soft-blue);
+      color: var(--ink);
+    }
+
+    .app-shell.menu-collapsed .topic-menu {
+      padding: 10px;
+    }
+
+    .app-shell.menu-collapsed .menu-title,
+    .app-shell.menu-collapsed .topic-label {
+      display: none;
+    }
+
+    .app-shell.menu-collapsed .topic-tab {
+      padding: 7px;
+      text-align: center;
+    }
+
+    .app-shell.menu-collapsed .topic-index {
+      margin-right: 0;
+    }
+
+    .topic-tab.active {
+      border-color: var(--blue);
+      background: var(--soft-blue);
+      color: var(--ink);
+    }
+
+    .topic-pages {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .topic-panel {
+      display: none;
+    }
+
+    .topic-panel.active {
+      display: block;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .theme-toggle { white-space: nowrap; min-width: 116px; }
+
+    .workbench {
+      display: grid;
+      grid-template-columns: minmax(280px, var(--split-left)) 12px minmax(300px, 1fr);
+      gap: 10px;
       align-items: stretch;
+    }
+
+    .splitter {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--soft-blue), var(--panel));
+      cursor: col-resize;
+      position: relative;
+      min-height: 100%;
+    }
+
+    .splitter::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 52px;
+      border-radius: 99px;
+      background: var(--muted);
+      transform: translate(-50%, -50%);
+      opacity: 0.65;
+    }
+
+    .visual-column,
+    .code-panel {
+      min-width: 0;
     }
 
     .stage {
       position: relative;
-      min-height: 540px;
+      min-height: 560px;
       border: 1px solid var(--line);
       border-radius: 8px;
       overflow: hidden;
@@ -113,6 +268,7 @@
         linear-gradient(90deg, rgba(22,32,42,0.045) 1px, transparent 1px),
         linear-gradient(0deg, rgba(22,32,42,0.045) 1px, transparent 1px);
       background-size: 36px 36px;
+      container-type: inline-size;
     }
 
     [data-theme="dark"] .stage {
@@ -127,8 +283,8 @@
       top: 0;
       bottom: 0;
       width: 25%;
-      border-right: 1px solid var(--line);
       padding: 12px;
+      border-right: 1px solid var(--line);
     }
 
     .lane:nth-child(1) { left: 0; }
@@ -137,7 +293,7 @@
     .lane:nth-child(4) { left: 75%; border-right: 0; }
 
     .lane-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
@@ -145,15 +301,15 @@
 
     .node {
       position: absolute;
-      width: min(230px, 22vw);
-      min-width: 145px;
-      padding: 12px;
+      width: clamp(112px, 21%, 220px);
+      min-width: 0;
+      padding: 10px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
       box-shadow: 0 8px 18px rgba(20, 30, 40, 0.08);
-      font-size: 14px;
-      line-height: 1.35;
+      font-size: 13px;
+      line-height: 1.28;
       transition: border-color 220ms ease, background 220ms ease, transform 220ms ease;
     }
 
@@ -169,6 +325,31 @@
       font-size: 15px;
     }
 
+    @container (max-width: 520px) {
+      .node {
+        width: clamp(96px, 22%, 150px);
+        padding: 8px;
+        font-size: 12px;
+      }
+
+      .node strong {
+        font-size: 13px;
+      }
+
+      .mini-row {
+        gap: 4px;
+        font-size: 11px;
+      }
+
+      .status {
+        padding: 10px;
+      }
+
+      .status-text {
+        font-size: 12px;
+      }
+    }
+
     .source { left: 3%; top: 104px; }
     .tx { left: 28%; top: 86px; }
     .db { left: 53%; top: 104px; }
@@ -181,13 +362,15 @@
       gap: 8px;
       margin-top: 8px;
       padding-top: 8px;
-      border-top: 1px solid #e6ebf0;
+      border-top: 1px solid var(--line);
     }
 
     .amount { font-weight: 700; }
 
     .money-token {
       position: absolute;
+      left: 7%;
+      top: 390px;
       width: 42px;
       height: 42px;
       border-radius: 999px;
@@ -197,8 +380,6 @@
       font-weight: 700;
       background: var(--blue);
       box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
-      left: 7%;
-      top: 385px;
       transition: left 520ms ease, top 520ms ease, background 240ms ease;
     }
 
@@ -210,9 +391,7 @@
       opacity: 0;
     }
 
-    .money-token.moving .pulse {
-      animation: pulse 1.4s ease-out;
-    }
+    .money-token.moving .pulse { animation: pulse 1.4s ease-out; }
 
     .commit-badge,
     .no-rollback-badge {
@@ -227,24 +406,10 @@
       transform: translateY(-6px);
     }
 
-    .commit-badge {
-      right: 26%;
-      top: 46px;
-      background: var(--green);
-    }
-
-    .no-rollback-badge {
-      right: 3%;
-      top: 92px;
-      max-width: 190px;
-      background: var(--red);
-    }
-
+    .commit-badge { right: 26%; top: 46px; background: var(--green); }
+    .no-rollback-badge { right: 3%; top: 92px; max-width: 190px; background: var(--red); }
     .commit-badge.visible,
-    .no-rollback-badge.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .no-rollback-badge.visible { opacity: 1; transform: translateY(0); }
 
     .status {
       position: absolute;
@@ -275,8 +440,8 @@
     }
 
     .status-title {
-      font-weight: 700;
       font-size: 14px;
+      font-weight: 700;
     }
 
     .status-text {
@@ -298,32 +463,107 @@
       background: var(--panel);
     }
 
-    button {
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--panel);
-      color: var(--ink);
-      padding: 9px 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    button.primary {
-      background: var(--blue);
-      border-color: var(--blue);
-      color: #fff;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.45;
-    }
-
     .step-counter {
       margin-left: auto;
       color: var(--muted);
       font-size: 14px;
       font-weight: 700;
+    }
+
+    .code-panel {
+      border: 1px solid #24324a;
+      border-radius: 8px;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 628px;
+    }
+
+    .ide-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 12px;
+      border-bottom: 1px solid #24324a;
+      background: var(--code-top);
+    }
+
+    .ide-dots { display: flex; gap: 7px; }
+    .ide-dot { width: 11px; height: 11px; border-radius: 999px; display: block; }
+    .ide-dot.red { background: #f87171; }
+    .ide-dot.amber { background: #fbbf24; }
+    .ide-dot.green { background: #34d399; }
+
+    .ide-title {
+      color: var(--code-muted);
+      font-size: 13px;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    pre {
+      margin: 0;
+      padding: 10px 0;
+      overflow: auto;
+      font-family: Consolas, "Courier New", monospace;
+      font-family: "JetBrains Mono", "Cascadia Mono", Consolas, "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.22;
+      counter-reset: code-line;
+      flex: 1;
+    }
+
+    .code-line {
+      display: block;
+      position: relative;
+      min-height: 17px;
+      padding: 0 14px 0 52px;
+      border-left: 4px solid transparent;
+      white-space: pre;
+      color: var(--code-ink);
+    }
+
+    .code-line::before {
+      counter-increment: code-line;
+      content: counter(code-line);
+      position: absolute;
+      left: 14px;
+      width: 24px;
+      text-align: right;
+      color: var(--code-muted);
+    }
+
+    .code-line.active {
+      background: rgba(96, 165, 250, 0.18);
+      border-left-color: var(--blue);
+    }
+
+    .kw { color: var(--code-keyword); font-weight: 700; }
+    .type { color: var(--code-type); }
+    .method { color: var(--code-method); }
+    .comment { color: var(--code-comment); font-style: italic; }
+
+    .debug-result {
+      min-height: 58px;
+      padding: 11px 12px;
+      border-top: 1px solid #24324a;
+      background: rgba(96, 165, 250, 0.12);
+      color: var(--code-ink);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.75fr) minmax(320px, 1fr);
+      gap: 16px;
+      margin-top: 16px;
     }
 
     .side-panel {
@@ -332,20 +572,28 @@
       align-content: start;
     }
 
-    .explain {
+    .explain,
+    .interview-panel {
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 14px;
       background: var(--panel);
+      overflow: hidden;
     }
 
-    .explain h3 {
+    .explain { padding: 14px; }
+    .term { background: var(--soft-blue); }
+    .risk { background: var(--soft-amber); border-left: 4px solid var(--amber); }
+    .correct { background: var(--soft-green); border-left: 4px solid var(--green); }
+
+    .explain h3,
+    .panel-header h3 {
       margin: 0 0 8px;
       font-size: 16px;
     }
 
     .explain p,
-    .explain li {
+    .explain li,
+    .interview-content {
       color: var(--muted);
       line-height: 1.45;
       font-size: 14px;
@@ -354,13 +602,126 @@
     .explain p { margin: 0; }
     .explain ul { margin: 0; padding-left: 18px; }
 
-    .term { background: var(--soft-blue); }
-    .risk { background: var(--soft-amber); border-left: 4px solid var(--amber); }
-    .correct { background: var(--soft-green); border-left: 4px solid var(--green); }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
 
-    .theme-toggle {
-      white-space: nowrap;
-      min-width: 116px;
+    .interview-content {
+      display: none;
+      padding: 14px;
+    }
+
+    .interview-content.visible { display: block; }
+    .interview-content h4 {
+      margin: 0 0 6px;
+      color: var(--ink);
+      font-size: 15px;
+    }
+    .interview-content p { margin: 0 0 12px; }
+
+    .exception-stage {
+      display: grid;
+      gap: 12px;
+      min-height: 420px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .scenario-map {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .scenario-card {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      min-height: 132px;
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .scenario-card.active {
+      border-color: var(--blue);
+      background: var(--soft-blue);
+      transform: translateY(-3px);
+    }
+
+    .scenario-card.rollback {
+      border-color: var(--red);
+      background: rgba(248, 113, 113, 0.12);
+    }
+
+    .scenario-card.commit {
+      border-color: var(--green);
+      background: var(--soft-green);
+    }
+
+    .scenario-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .scenario-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .exception-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .flow-card {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      min-height: 112px;
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .flow-card.active {
+      border-color: var(--blue);
+      background: var(--soft-blue);
+      transform: translateY(-3px);
+    }
+
+    .flow-card.rollback {
+      border-color: var(--red);
+      background: rgba(248, 113, 113, 0.12);
+    }
+
+    .flow-card.commit {
+      border-color: var(--green);
+      background: var(--soft-green);
+    }
+
+    .flow-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .exception-result {
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--soft-amber);
+      color: var(--ink);
+      line-height: 1.45;
+      font-weight: 700;
     }
 
     @keyframes pulse {
@@ -368,13 +729,57 @@
       100% { transform: scale(1.55); opacity: 0; }
     }
 
-    @media (max-width: 980px) {
-      .layout { grid-template-columns: 1fr; }
-      .node { width: min(230px, 24vw); }
+    @media (max-width: 1100px) {
+      .app-shell,
+      .workbench,
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topic-menu {
+        position: static;
+      }
+
+      .splitter {
+        display: none;
+      }
+
+      .code-panel {
+        min-height: 460px;
+      }
+
+      .node {
+        width: clamp(118px, 21%, 220px);
+      }
+
+      .exception-flow {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .scenario-map {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 760px) {
-      .stage { min-height: 760px; }
+      header,
+      main {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .header-row {
+        flex-direction: column;
+      }
+
+      section {
+        padding: 14px;
+      }
+
+      .stage {
+        min-height: 780px;
+      }
+
       .lane {
         width: 100%;
         height: 25%;
@@ -385,7 +790,12 @@
       .lane:nth-child(2) { left: 0; top: 25%; }
       .lane:nth-child(3) { left: 0; top: 50%; }
       .lane:nth-child(4) { left: 0; top: 75%; border-bottom: 0; }
-      .node { width: calc(100% - 32px); left: 16px; min-width: 0; }
+
+      .node {
+        width: calc(100% - 32px);
+        min-width: 0;
+        left: 16px;
+      }
       .source { top: 48px; }
       .tx { top: 214px; }
       .db { top: 382px; }
@@ -395,6 +805,9 @@
       .commit-badge { right: 18px; top: 342px; }
       .no-rollback-badge { right: 18px; top: 590px; }
       .step-counter { width: 100%; margin-left: 0; }
+      .code-line { padding-left: 46px; font-size: 13px; }
+      .exception-flow { grid-template-columns: 1fr; }
+      .scenario-map { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -403,19 +816,29 @@
     <div class="header-row">
       <div>
         <h1>Java Banking Interview Animasyonlari</h1>
-        <p class="subtitle">Bu dosya konular ilerledikce buyuyecek. Animasyonlar otomatik akmaz; Geri ve Ileri butonlariyla adim adim incelenir.</p>
+        <p class="subtitle">Animasyonlar otomatik akmaz; Geri ve Ileri butonlariyla adim adim incelenir. Kod ekrani ayni adimda hangi Java kodunun calistigini debug eder gibi gosterir.</p>
       </div>
       <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
     </div>
   </header>
 
-  <main>
-    <section>
-      <h2>01 - Spring Transaction Boundary: Banka Transferi</h2>
-      <p class="topic-note">Bu gorsel, banka transferinde para hareketinin neden DB transaction icinde kalmasi gerektigini, SMS/HTTP gibi dis etkilerin neden transaction disina tasinmasi gerektigini ve outbox yaklasiminin neyi cozdgugunu adim adim gosterir.</p>
+  <main class="app-shell">
+    <nav class="topic-menu" aria-label="Konu menusu">
+      <div class="menu-header">
+        <h2 class="menu-title">Konular</h2>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Sol menuyu daralt">‹</button>
+      </div>
+      <button class="topic-tab active" type="button" data-target-topic="topic-transaction-boundary"><span class="topic-index">01</span><span class="topic-label">Transaction Boundary</span></button>
+      <button class="topic-tab" type="button" data-target-topic="topic-rollback-rules"><span class="topic-index">02</span><span class="topic-label">Rollback Rules</span></button>
+    </nav>
 
-      <div class="layout">
-        <div>
+    <div class="topic-pages">
+    <section class="topic-panel active" id="topic-transaction-boundary">
+      <h2>01 - Spring Transaction Boundary: Banka Transferi</h2>
+      <p class="topic-note">Bu gorsel, banka transferinde para hareketinin neden DB transaction icinde kalmasi gerektigini, SMS/HTTP gibi dis etkilerin neden transaction disina tasinmasi gerektigini ve outbox yaklasiminin neyi cozdgunu adim adim gosterir.</p>
+
+      <div class="workbench">
+        <div class="visual-column">
           <div class="stage" aria-label="Banka transferi transaction animasyonu">
             <div class="lane"><div class="lane-title">Istek / API</div></div>
             <div class="lane"><div class="lane-title">Servis Transaction</div></div>
@@ -469,6 +892,45 @@
           </div>
         </div>
 
+        <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" aria-label="Animasyon ve kod paneli genislik ayari"></div>
+
+        <div class="code-panel">
+          <div class="ide-header">
+            <div class="ide-dots" aria-hidden="true">
+              <span class="ide-dot red"></span>
+              <span class="ide-dot amber"></span>
+              <span class="ide-dot green"></span>
+            </div>
+            <div class="ide-title">AccountTransferService.java</div>
+          </div>
+          <pre aria-label="Transfer servis kodu"><code>
+<span class="code-line" data-code="validate"><span class="kw">public</span> <span class="type">TransferResult</span> <span class="method">transfer</span>(<span class="type">TransferCommand</span> command) {</span>
+<span class="code-line" data-code="validate">    <span class="method">validate</span>(command); <span class="comment">// hesaplar, tutar ve idempotency key</span></span>
+<span class="code-line" data-code="tx">    <span class="kw">return</span> <span class="method">transactionalTransfer</span>(command);</span>
+<span class="code-line" data-code="tx">}</span>
+<span class="code-line" data-code="tx"></span>
+<span class="code-line" data-code="tx"><span class="kw">@Transactional</span></span>
+<span class="code-line" data-code="tx"><span class="type">TransferResult</span> <span class="method">transactionalTransfer</span>(<span class="type">TransferCommand</span> command) {</span>
+<span class="code-line" data-code="db">    <span class="type">Account</span> source = accountRepository.<span class="method">lockById</span>(command.<span class="method">fromAccountId</span>());</span>
+<span class="code-line" data-code="db">    <span class="type">Account</span> target = accountRepository.<span class="method">lockById</span>(command.<span class="method">toAccountId</span>());</span>
+<span class="code-line" data-code="db">    source.<span class="method">debit</span>(command.<span class="method">amount</span>());</span>
+<span class="code-line" data-code="db">    target.<span class="method">credit</span>(command.<span class="method">amount</span>());</span>
+<span class="code-line" data-code="db">    transferRepository.<span class="method">save</span>(<span class="kw">new</span> <span class="type">Transfer</span>(source, target, command.<span class="method">amount</span>()));</span>
+<span class="code-line" data-code="outbox">    auditRepository.<span class="method">save</span>(Audit.<span class="method">transferRequested</span>(command));</span>
+<span class="code-line" data-code="outbox">    outboxRepository.<span class="method">save</span>(TransferCompletedEvent.<span class="method">from</span>(command));</span>
+<span class="code-line" data-code="commit">    <span class="kw">return</span> TransferResult.<span class="method">accepted</span>(); <span class="comment">// method bitince commit denenir</span></span>
+<span class="code-line" data-code="tx">}</span>
+<span class="code-line" data-code="external"></span>
+<span class="code-line" data-code="external"><span class="comment">// Ayri worker: DB commit olduktan sonra calisir</span></span>
+<span class="code-line" data-code="external"><span class="kw">void</span> <span class="method">publishOutboxEvent</span>(<span class="type">OutboxEvent</span> event) {</span>
+<span class="code-line" data-code="external">    notificationClient.<span class="method">sendTransferSms</span>(event); <span class="comment">// basarisizsa retry</span></span>
+<span class="code-line" data-code="external">}</span>
+          </code></pre>
+          <div class="debug-result" id="debugResult"></div>
+        </div>
+      </div>
+
+      <div class="support-grid">
         <aside class="side-panel">
           <div class="explain term">
             <h3>Kavram: Transaction Boundary</h3>
@@ -495,8 +957,138 @@
             </ul>
           </div>
         </aside>
+
+        <div class="interview-panel">
+          <div class="panel-header">
+            <h3>Mulakat Sorusu ve Senior Cevap</h3>
+            <button id="interviewToggle" type="button">Goster</button>
+          </div>
+          <div class="interview-content" id="interviewContent">
+            <h4>TR Soru</h4>
+            <p>Bir banka transferinde `@Transactional` boundary nereye konur? SMS/HTTP bildirimi transaction icinde yapilmali mi?</p>
+            <h4>TR Senior Cevap</h4>
+            <p>Boundary para hareketinin atomik olmasi gereken servis use-case'ine konur: debit, credit, transfer kaydi ve audit/outbox kaydi ayni transaction icinde olmalidir. SMS/HTTP gibi dis etkiler transaction icinde yapilmaz; outbox ile commit sonrasinda retry edilebilir sekilde yonetilir.</p>
+            <h4>EN Question</h4>
+            <p>Where would you place the `@Transactional` boundary in a banking transfer? Should SMS/HTTP notification happen inside the transaction?</p>
+            <h4>EN Senior Answer</h4>
+            <p>I would place the boundary around the atomic money-movement use case: debit, credit, transfer record, and audit/outbox insert. I would not call SMS/HTTP inside the DB transaction; I would publish it after commit through an outbox with retry and monitoring.</p>
+          </div>
+        </div>
       </div>
     </section>
+
+    <section class="topic-panel" id="topic-rollback-rules">
+      <h2>02 - @Transactional Rollback Rules: Checked vs Unchecked Exception</h2>
+      <p class="topic-note">Bu bolum, Spring'in varsayilan rollback davranisini gosterir: RuntimeException ve Error rollback yapar; checked exception ise `rollbackFor` yazilmadikca varsayilan olarak rollback yapmaz.</p>
+
+      <div class="workbench">
+        <div class="visual-column">
+          <div class="exception-stage">
+            <div class="scenario-map">
+              <div class="scenario-card" data-ex-node="start">
+                <strong>1. Baslangic</strong>
+                <span>Transaction acilir. Debit ve credit henuz commit edilmedi.</span>
+              </div>
+              <div class="scenario-card" data-ex-node="business">
+                <strong>2. Business validation</strong>
+                <span>Yetersiz bakiye gibi beklenen durumlar tercihen state degismeden yakalanir.</span>
+              </div>
+              <div class="scenario-card" data-ex-node="runtime">
+                <strong>3. RuntimeException</strong>
+                <span>Beklenmeyen teknik hata. Spring default rollback yapar.</span>
+              </div>
+              <div class="scenario-card" data-ex-node="checked">
+                <strong>4. Checked exception</strong>
+                <span>Spring default rollback yapmaz. Bu kural banking icin riskli olabilir.</span>
+              </div>
+              <div class="scenario-card" data-ex-node="rollbackFor">
+                <strong>5. rollbackFor</strong>
+                <span>Checked exception da finansal butunlugu bozuyorsa acik rollback kuralidir.</span>
+              </div>
+            </div>
+            <div class="exception-result" id="exceptionResult"></div>
+          </div>
+
+          <div class="controls" aria-label="Rollback rules animasyon kontrolleri">
+            <button id="exPrevBtn" type="button">Geri</button>
+            <button id="exNextBtn" class="primary" type="button">Ileri</button>
+            <button id="exResetBtn" type="button">Basa don</button>
+            <span class="step-counter" id="exStepCounter"></span>
+          </div>
+        </div>
+
+        <div class="code-panel">
+          <div class="ide-header">
+            <div class="ide-dots" aria-hidden="true">
+              <span class="ide-dot red"></span>
+              <span class="ide-dot amber"></span>
+              <span class="ide-dot green"></span>
+            </div>
+            <div class="ide-title">RollbackRulesExample.java</div>
+          </div>
+          <pre aria-label="Rollback rules kodu"><code>
+<span class="code-line" data-ex-code="business"><span class="kw">void</span> <span class="method">validateBeforeTx</span>(<span class="type">TransferCommand</span> command) {</span>
+<span class="code-line" data-ex-code="business">    <span class="kw">if</span> (!accountService.<span class="method">hasEnoughBalance</span>(command)) {</span>
+<span class="code-line" data-ex-code="business">        <span class="kw">throw new</span> <span class="type">InsufficientBalanceException</span>();</span>
+<span class="code-line" data-ex-code="business">    }</span>
+<span class="code-line" data-ex-code="business">}</span>
+<span class="code-line" data-ex-code="start"></span>
+<span class="code-line" data-ex-code="start"><span class="kw">@Transactional</span></span>
+<span class="code-line" data-ex-code="start"><span class="kw">void</span> <span class="method">transferDefaultRules</span>(<span class="type">TransferCommand</span> command)</span>
+<span class="code-line" data-ex-code="checked">        <span class="kw">throws</span> <span class="type">TransferFileException</span> {</span>
+<span class="code-line" data-ex-code="start">    accountService.<span class="method">debit</span>(command);</span>
+<span class="code-line" data-ex-code="start">    accountService.<span class="method">credit</span>(command);</span>
+<span class="code-line" data-ex-code="runtime">    fraudClient.<span class="method">check</span>(command); <span class="comment">// RuntimeException olursa rollback</span></span>
+<span class="code-line" data-ex-code="checked">    fileGateway.<span class="method">writeTransferFile</span>(command); <span class="comment">// checked exception default rollback yapmaz</span></span>
+<span class="code-line" data-ex-code="start">}</span>
+<span class="code-line" data-ex-code="rollbackFor"></span>
+<span class="code-line" data-ex-code="rollbackFor"><span class="kw">@Transactional</span>(rollbackFor = <span class="type">TransferFileException</span>.<span class="kw">class</span>)</span>
+<span class="code-line" data-ex-code="rollbackFor"><span class="kw">void</span> <span class="method">transferSafeForBanking</span>(<span class="type">TransferCommand</span> command)</span>
+<span class="code-line" data-ex-code="rollbackFor">        <span class="kw">throws</span> <span class="type">TransferFileException</span> {</span>
+<span class="code-line" data-ex-code="rollbackFor">    accountService.<span class="method">debit</span>(command);</span>
+<span class="code-line" data-ex-code="rollbackFor">    accountService.<span class="method">credit</span>(command);</span>
+<span class="code-line" data-ex-code="rollbackFor">    fileGateway.<span class="method">writeTransferFile</span>(command);</span>
+<span class="code-line" data-ex-code="rollbackFor">}</span>
+          </code></pre>
+          <div class="debug-result" id="exceptionDebug"></div>
+        </div>
+      </div>
+
+      <div class="support-grid">
+        <aside class="side-panel">
+          <div class="explain term">
+            <h3>Checked Exception</h3>
+            <p>Compiler'in yakalamaya veya `throws` ile bildirmeye zorladigi exception turudur. Ornek: IOException.</p>
+          </div>
+          <div class="explain term">
+            <h3>Unchecked Exception</h3>
+            <p>RuntimeException ve alt siniflaridir. Spring varsayilan olarak rollback yapar.</p>
+          </div>
+          <div class="explain risk">
+            <h3>Banking Riski</h3>
+            <p>Checked exception para hareketini yarim birakabilecekse rollback kuralini varsayima birakma; `rollbackFor` ile acik yaz.</p>
+          </div>
+        </aside>
+
+        <div class="interview-panel">
+          <div class="panel-header">
+            <h3>Mulakat Sorusu ve Senior Cevap</h3>
+            <button id="exceptionInterviewToggle" type="button">Goster</button>
+          </div>
+          <div class="interview-content" id="exceptionInterviewContent">
+            <h4>TR Soru</h4>
+            <p>Spring `@Transactional` varsayilan olarak hangi exception turlerinde rollback yapar?</p>
+            <h4>TR Senior Cevap</h4>
+            <p>Varsayilan olarak RuntimeException ve Error icin rollback yapar, checked exception icin rollback yapmaz. Banking gibi para butunlugunun kritik oldugu sistemlerde checked exception da transaction'i bozuyorsa `rollbackFor` ile acik rollback tanimlarim.</p>
+            <h4>EN Question</h4>
+            <p>By default, for which exception types does Spring `@Transactional` roll back?</p>
+            <h4>EN Senior Answer</h4>
+            <p>By default, Spring rolls back on RuntimeException and Error, but not on checked exceptions. In banking systems, if a checked exception can break money-movement consistency, I explicitly configure `rollbackFor`.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
   </main>
 
   <script>
@@ -505,8 +1097,10 @@
         title: "1. Istek dogrulanir",
         text: "Para hareketine baslamadan once hesaplar, tutar ve idempotency key kontrol edilir. Idempotency, ayni istegin tekrar gelirse ikinci kez para hareketi uretmemesidir.",
         node: "source",
-        pos: { left: "7%", top: "385px", color: "var(--blue)" },
+        pos: { left: "7%", top: "390px", color: "var(--blue)" },
         progress: "8%",
+        code: "validate",
+        debug: "Debug: validation asamasindayiz; DB henuz degismedi.",
       },
       {
         title: "2. Transaction boundary baslar",
@@ -514,6 +1108,8 @@
         node: "tx",
         pos: { left: "34%", top: "250px", color: "var(--blue)" },
         progress: "28%",
+        code: "tx",
+        debug: "Debug: transaction boundary acildi; artik DB islemleri ayni atomik kapsamda.",
       },
       {
         title: "3. Para hareketi atomik yazilir",
@@ -521,6 +1117,8 @@
         node: "db",
         pos: { left: "59%", top: "210px", color: "var(--green)" },
         progress: "48%",
+        code: "db",
+        debug: "Debug: debit, credit ve transfer kaydi ayni transaction icinde.",
       },
       {
         title: "4. Audit ve outbox kaydi eklenir",
@@ -528,6 +1126,8 @@
         node: "outbox",
         pos: { left: "59%", top: "370px", color: "var(--amber)" },
         progress: "68%",
+        code: "outbox",
+        debug: "Debug: audit ve outbox kaydi para hareketiyle birlikte commit edilecek.",
       },
       {
         title: "5. DB commit olur",
@@ -535,6 +1135,8 @@
         node: "db",
         pos: { left: "66%", top: "260px", color: "var(--green)" },
         progress: "84%",
+        code: "commit",
+        debug: "Debug: method basariyla biterse Spring commit dener; hata varsa rollback.",
         commit: true,
       },
       {
@@ -543,6 +1145,8 @@
         node: "external",
         pos: { left: "83%", top: "285px", color: "var(--green)" },
         progress: "100%",
+        code: "external",
+        debug: "Debug: SMS/HTTP artik transaction disinda; basarisizsa para hareketi tekrar calismaz, retry edilir.",
         rollbackWarning: true,
       },
     ];
@@ -560,7 +1164,13 @@
     const commitBadge = document.getElementById("commitBadge");
     const rollbackBadge = document.getElementById("rollbackBadge");
     const themeToggle = document.getElementById("themeToggle");
+    const debugResult = document.getElementById("debugResult");
+    const interviewToggle = document.getElementById("interviewToggle");
+    const interviewContent = document.getElementById("interviewContent");
+    const workbench = document.querySelector(".workbench");
+    const splitter = document.getElementById("splitter");
     const nodes = Array.from(document.querySelectorAll("[data-node]"));
+    const codeLines = Array.from(document.querySelectorAll("[data-code]"));
 
     function renderStep() {
       const step = steps[currentStep];
@@ -573,10 +1183,12 @@
 
       title.textContent = step.title;
       text.textContent = step.text;
+      debugResult.textContent = step.debug;
       progressBar.style.width = step.progress;
       counter.textContent = `Adim ${currentStep + 1} / ${steps.length}`;
 
       nodes.forEach((node) => node.classList.toggle("active", node.dataset.node === step.node));
+      codeLines.forEach((line) => line.classList.toggle("active", line.dataset.code === step.code));
       commitBadge.classList.toggle("visible", Boolean(step.commit));
       rollbackBadge.classList.toggle("visible", Boolean(step.rollbackWarning));
 
@@ -599,6 +1211,11 @@
       renderStep();
     });
 
+    interviewToggle.addEventListener("click", () => {
+      const visible = interviewContent.classList.toggle("visible");
+      interviewToggle.textContent = visible ? "Gizle" : "Goster";
+    });
+
     function applyTheme(theme) {
       document.documentElement.dataset.theme = theme;
       themeToggle.textContent = theme === "dark" ? "Light mode" : "Dark mode";
@@ -610,11 +1227,144 @@
       applyTheme(currentTheme === "dark" ? "light" : "dark");
     });
 
+    let resizing = false;
+
+    splitter.addEventListener("pointerdown", (event) => {
+      resizing = true;
+      splitter.setPointerCapture(event.pointerId);
+      document.body.style.userSelect = "none";
+    });
+
+    splitter.addEventListener("pointermove", (event) => {
+      if (!resizing) return;
+      const rect = workbench.getBoundingClientRect();
+      const ratio = ((event.clientX - rect.left) / rect.width) * 100;
+      const clamped = Math.max(35, Math.min(65, ratio));
+      document.documentElement.style.setProperty("--split-left", `${clamped}%`);
+    });
+
+    splitter.addEventListener("pointerup", (event) => {
+      resizing = false;
+      splitter.releasePointerCapture(event.pointerId);
+      document.body.style.userSelect = "";
+    });
+
     const savedTheme = localStorage.getItem("javaInterviewAnimationTheme");
     const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
     applyTheme(savedTheme || (prefersDark ? "dark" : "light"));
-
     renderStep();
+
+    const exceptionSteps = [
+      {
+        title: "1. Transaction baslar",
+        text: "Debit ve credit ayni transaction icindedir. Henuz commit yoktur.",
+        node: "start",
+        code: "start",
+        result: "Debug: DB degisiklikleri henuz commit edilmedi.",
+        mode: "neutral",
+      },
+      {
+        title: "2. Business validation transaction oncesi",
+        text: "Yetersiz bakiye gibi beklenen business durumlari genelde state degismeden once yakalanir. Rollback'e guvenmek yerine para hareketine baslamamak daha temizdir.",
+        node: "business",
+        code: "business",
+        result: "Sonuc: DB state degismedi. Bu teknik rollback degil, beklenen is kuralidir.",
+        mode: "neutral",
+      },
+      {
+        title: "3. RuntimeException firlatilir",
+        text: "Spring varsayilan olarak RuntimeException icin rollback yapar.",
+        node: "runtime",
+        code: "runtime",
+        result: "Sonuc: rollback. Debit ve credit commit edilmez.",
+        mode: "rollback",
+      },
+      {
+        title: "4. Checked exception firlatilir",
+        text: "Spring varsayilan olarak checked exception icin rollback yapmaz. Bu Java/Spring kuralidir; banking icin otomatik guvenli anlamina gelmez.",
+        node: "checked",
+        code: "checked",
+        result: "Sonuc: default davranista rollback yok. Debit/credit commit olabilir; kural acik tanimlanmali.",
+        mode: "commit",
+      },
+      {
+        title: "5. rollbackFor ile acik kural",
+        text: "Checked exception para butunlugunu bozuyorsa rollbackFor ile rollback tanimlanir.",
+        node: "rollbackFor",
+        code: "rollbackFor",
+        result: "Sonuc: checked exception da rollback yapar; kural artik aciktir.",
+        mode: "rollback",
+      },
+    ];
+
+    let exceptionStep = 0;
+    const exPrevBtn = document.getElementById("exPrevBtn");
+    const exNextBtn = document.getElementById("exNextBtn");
+    const exResetBtn = document.getElementById("exResetBtn");
+    const exCounter = document.getElementById("exStepCounter");
+    const exceptionResult = document.getElementById("exceptionResult");
+    const exceptionDebug = document.getElementById("exceptionDebug");
+    const exceptionCards = Array.from(document.querySelectorAll("[data-ex-node]"));
+    const exceptionCodeLines = Array.from(document.querySelectorAll("[data-ex-code]"));
+    const exceptionInterviewToggle = document.getElementById("exceptionInterviewToggle");
+    const exceptionInterviewContent = document.getElementById("exceptionInterviewContent");
+    const topicTabs = Array.from(document.querySelectorAll("[data-target-topic]"));
+    const topicPanels = Array.from(document.querySelectorAll(".topic-panel"));
+    const appShell = document.querySelector(".app-shell");
+    const menuToggle = document.getElementById("menuToggle");
+
+    function renderExceptionStep() {
+      const step = exceptionSteps[exceptionStep];
+      exceptionResult.textContent = `${step.title}: ${step.text}`;
+      exceptionDebug.textContent = step.result;
+      exCounter.textContent = `Adim ${exceptionStep + 1} / ${exceptionSteps.length}`;
+
+      exceptionCards.forEach((card) => {
+        card.classList.toggle("active", card.dataset.exNode === step.node);
+        card.classList.toggle("rollback", card.dataset.exNode === step.node && step.mode === "rollback");
+        card.classList.toggle("commit", card.dataset.exNode === step.node && step.mode === "commit");
+      });
+      exceptionCodeLines.forEach((line) => line.classList.toggle("active", line.dataset.exCode === step.code));
+
+      exPrevBtn.disabled = exceptionStep === 0;
+      exNextBtn.disabled = exceptionStep === exceptionSteps.length - 1;
+    }
+
+    exPrevBtn.addEventListener("click", () => {
+      exceptionStep = Math.max(0, exceptionStep - 1);
+      renderExceptionStep();
+    });
+
+    exNextBtn.addEventListener("click", () => {
+      exceptionStep = Math.min(exceptionSteps.length - 1, exceptionStep + 1);
+      renderExceptionStep();
+    });
+
+    exResetBtn.addEventListener("click", () => {
+      exceptionStep = 0;
+      renderExceptionStep();
+    });
+
+    exceptionInterviewToggle.addEventListener("click", () => {
+      const visible = exceptionInterviewContent.classList.toggle("visible");
+      exceptionInterviewToggle.textContent = visible ? "Gizle" : "Goster";
+    });
+
+    renderExceptionStep();
+
+    topicTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const target = tab.dataset.targetTopic;
+        topicTabs.forEach((item) => item.classList.toggle("active", item === tab));
+        topicPanels.forEach((panel) => panel.classList.toggle("active", panel.id === target));
+      });
+    });
+
+    menuToggle.addEventListener("click", () => {
+      const collapsed = appShell.classList.toggle("menu-collapsed");
+      menuToggle.textContent = collapsed ? "›" : "‹";
+      menuToggle.setAttribute("aria-label", collapsed ? "Sol menuyu ac" : "Sol menuyu daralt");
+    });
   </script>
 </body>
 </html>
