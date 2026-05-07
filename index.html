@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Java Banking Interview Animasyonlari</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --ink: #16202a;
+      --muted: #5c6875;
+      --line: #c9d2dc;
+      --blue: #2563eb;
+      --green: #147d64;
+      --red: #b42318;
+      --amber: #a15c07;
+      --soft-blue: #eef4ff;
+      --soft-green: #eaf7f2;
+      --soft-amber: #fff8eb;
+    }
+
+    [data-theme="dark"] {
+      --bg: #111827;
+      --panel: #172033;
+      --ink: #eef4ff;
+      --muted: #b8c3d1;
+      --line: #344155;
+      --blue: #60a5fa;
+      --green: #34d399;
+      --red: #f87171;
+      --amber: #fbbf24;
+      --soft-blue: #1f2f4d;
+      --soft-green: #17382f;
+      --soft-amber: #3f2d12;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    header {
+      padding: 24px clamp(16px, 4vw, 44px);
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 3vw, 36px);
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      max-width: 1040px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    main {
+      padding: 24px clamp(16px, 4vw, 44px) 48px;
+      display: grid;
+      gap: 24px;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .topic-note {
+      margin: 0 0 18px;
+      max-width: 980px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .stage {
+      position: relative;
+      min-height: 540px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(22,32,42,0.045) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(22,32,42,0.045) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+
+    [data-theme="dark"] .stage {
+      background:
+        linear-gradient(90deg, rgba(238,244,255,0.055) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(238,244,255,0.055) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+
+    .lane {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 25%;
+      border-right: 1px solid var(--line);
+      padding: 12px;
+    }
+
+    .lane:nth-child(1) { left: 0; }
+    .lane:nth-child(2) { left: 25%; }
+    .lane:nth-child(3) { left: 50%; }
+    .lane:nth-child(4) { left: 75%; border-right: 0; }
+
+    .lane-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .node {
+      position: absolute;
+      width: min(230px, 22vw);
+      min-width: 145px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 8px 18px rgba(20, 30, 40, 0.08);
+      font-size: 14px;
+      line-height: 1.35;
+      transition: border-color 220ms ease, background 220ms ease, transform 220ms ease;
+    }
+
+    .node.active {
+      border-color: var(--blue);
+      background: var(--soft-blue);
+      transform: translateY(-3px);
+    }
+
+    .node strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .source { left: 3%; top: 104px; }
+    .tx { left: 28%; top: 86px; }
+    .db { left: 53%; top: 104px; }
+    .outbox { left: 53%; top: 300px; }
+    .external { left: 77%; top: 150px; }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #e6ebf0;
+    }
+
+    .amount { font-weight: 700; }
+
+    .money-token {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      background: var(--blue);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+      left: 7%;
+      top: 385px;
+      transition: left 520ms ease, top 520ms ease, background 240ms ease;
+    }
+
+    .pulse {
+      position: absolute;
+      inset: -8px;
+      border: 2px solid rgba(37, 99, 235, 0.28);
+      border-radius: inherit;
+      opacity: 0;
+    }
+
+    .money-token.moving .pulse {
+      animation: pulse 1.4s ease-out;
+    }
+
+    .commit-badge,
+    .no-rollback-badge {
+      position: absolute;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 220ms ease, transform 220ms ease;
+      transform: translateY(-6px);
+    }
+
+    .commit-badge {
+      right: 26%;
+      top: 46px;
+      background: var(--green);
+    }
+
+    .no-rollback-badge {
+      right: 3%;
+      top: 92px;
+      max-width: 190px;
+      background: var(--red);
+    }
+
+    .commit-badge.visible,
+    .no-rollback-badge.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .status {
+      position: absolute;
+      left: 3%;
+      right: 3%;
+      bottom: 18px;
+      padding: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline {
+      height: 9px;
+      border-radius: 99px;
+      background: #e8edf3;
+      overflow: hidden;
+    }
+
+    .timeline span {
+      display: block;
+      width: 8%;
+      height: 100%;
+      background: var(--green);
+      transition: width 260ms ease;
+    }
+
+    .status-title {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .status-text {
+      min-height: 58px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    button {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .step-counter {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .side-panel {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .explain {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--panel);
+    }
+
+    .explain h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .explain p,
+    .explain li {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .explain p { margin: 0; }
+    .explain ul { margin: 0; padding-left: 18px; }
+
+    .term { background: var(--soft-blue); }
+    .risk { background: var(--soft-amber); border-left: 4px solid var(--amber); }
+    .correct { background: var(--soft-green); border-left: 4px solid var(--green); }
+
+    .theme-toggle {
+      white-space: nowrap;
+      min-width: 116px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.75; }
+      100% { transform: scale(1.55); opacity: 0; }
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .node { width: min(230px, 24vw); }
+    }
+
+    @media (max-width: 760px) {
+      .stage { min-height: 760px; }
+      .lane {
+        width: 100%;
+        height: 25%;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .lane:nth-child(1) { left: 0; top: 0; }
+      .lane:nth-child(2) { left: 0; top: 25%; }
+      .lane:nth-child(3) { left: 0; top: 50%; }
+      .lane:nth-child(4) { left: 0; top: 75%; border-bottom: 0; }
+      .node { width: calc(100% - 32px); left: 16px; min-width: 0; }
+      .source { top: 48px; }
+      .tx { top: 214px; }
+      .db { top: 382px; }
+      .outbox { top: 512px; }
+      .external { top: 625px; }
+      .status { left: 16px; right: 16px; bottom: 14px; }
+      .commit-badge { right: 18px; top: 342px; }
+      .no-rollback-badge { right: 18px; top: 590px; }
+      .step-counter { width: 100%; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div>
+        <h1>Java Banking Interview Animasyonlari</h1>
+        <p class="subtitle">Bu dosya konular ilerledikce buyuyecek. Animasyonlar otomatik akmaz; Geri ve Ileri butonlariyla adim adim incelenir.</p>
+      </div>
+      <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>01 - Spring Transaction Boundary: Banka Transferi</h2>
+      <p class="topic-note">Bu gorsel, banka transferinde para hareketinin neden DB transaction icinde kalmasi gerektigini, SMS/HTTP gibi dis etkilerin neden transaction disina tasinmasi gerektigini ve outbox yaklasiminin neyi cozdgugunu adim adim gosterir.</p>
+
+      <div class="layout">
+        <div>
+          <div class="stage" aria-label="Banka transferi transaction animasyonu">
+            <div class="lane"><div class="lane-title">Istek / API</div></div>
+            <div class="lane"><div class="lane-title">Servis Transaction</div></div>
+            <div class="lane"><div class="lane-title">Veritabani</div></div>
+            <div class="lane"><div class="lane-title">Dis Etki</div></div>
+
+            <div class="node source" data-node="source">
+              <strong>Transfer Istegi</strong>
+              fromAccount, toAccount, amount, idempotencyKey
+            </div>
+
+            <div class="node tx" data-node="tx">
+              <strong>@Transactional Siniri</strong>
+              Birlikte commit veya rollback olmasi gereken DB isleri.
+              <div class="mini-row"><span>Teknik hata olursa</span><span class="amount">rollback</span></div>
+            </div>
+
+            <div class="node db" data-node="db">
+              <strong>Hesap ve Transfer Kayitlari</strong>
+              Para hareketinin kalici dogrusu burada tutulur.
+              <div class="mini-row"><span>Gonderen</span><span class="amount">-100</span></div>
+              <div class="mini-row"><span>Alici</span><span class="amount">+100</span></div>
+            </div>
+
+            <div class="node outbox" data-node="outbox">
+              <strong>Audit + Outbox</strong>
+              Audit: iz birakir. Outbox: commit sonrasi gonderilecek olayi saklar.
+            </div>
+
+            <div class="node external" data-node="external">
+              <strong>SMS / HTTP Bildirim</strong>
+              Commit sonrasi, retry edilebilir sekilde gonderilir.
+            </div>
+
+            <div class="money-token" id="moneyToken">TL<span class="pulse"></span></div>
+            <div class="commit-badge" id="commitBadge">DB COMMIT</div>
+            <div class="no-rollback-badge" id="rollbackBadge">Dis cagri DB rollback ile geri alinamaz</div>
+
+            <div class="status">
+              <div class="timeline"><span id="progressBar"></span></div>
+              <div class="status-title" id="stepTitle"></div>
+              <div class="status-text" id="stepText"></div>
+            </div>
+          </div>
+
+          <div class="controls" aria-label="Animasyon kontrolleri">
+            <button id="prevBtn" type="button">Geri</button>
+            <button id="nextBtn" class="primary" type="button">Ileri</button>
+            <button id="resetBtn" type="button">Basa don</button>
+            <span class="step-counter" id="stepCounter"></span>
+          </div>
+        </div>
+
+        <aside class="side-panel">
+          <div class="explain term">
+            <h3>Kavram: Transaction Boundary</h3>
+            <p>Transaction boundary, "bu DB islemleri ya birlikte basarili olsun ya da birlikte geri alinsin" dedigimiz sinirdir. Transferde para dusme, para ekleme ve transfer kaydi bu sinirda olmalidir.</p>
+          </div>
+
+          <div class="explain term">
+            <h3>Kavram: Rollback</h3>
+            <p>Rollback, commit edilmemis DB degisikliklerinin geri alinmasidir. Ama rollback sadece transaction'a dahil kaynagi etkiler; dis HTTP cagrisini geri alamaz.</p>
+          </div>
+
+          <div class="explain risk">
+            <h3>Banking Riski</h3>
+            <p>SMS transaction icinde gonderilir ve sonra DB rollback olursa musteri "transfer tamamlandi" mesaji alir ama sistemde transfer yoktur. Bu audit ve operasyon riski dogurur.</p>
+          </div>
+
+          <div class="explain correct">
+            <h3>Senior Yaklasim</h3>
+            <ul>
+              <li>Para hareketi DB transaction icinde tutulur.</li>
+              <li>Dis bildirim transaction icine alinmaz.</li>
+              <li>Outbox kaydi ayni transaction icinde yazilir.</li>
+              <li>Commit sonrasi worker bildirimi retry edebilir.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const steps = [
+      {
+        title: "1. Istek dogrulanir",
+        text: "Para hareketine baslamadan once hesaplar, tutar ve idempotency key kontrol edilir. Idempotency, ayni istegin tekrar gelirse ikinci kez para hareketi uretmemesidir.",
+        node: "source",
+        pos: { left: "7%", top: "385px", color: "var(--blue)" },
+        progress: "8%",
+      },
+      {
+        title: "2. Transaction boundary baslar",
+        text: "Transaction boundary, birlikte basarili olmasi gereken DB islemlerinin siniridir. Debit, credit ve transfer kaydi ayni sinir icinde olmalidir.",
+        node: "tx",
+        pos: { left: "34%", top: "250px", color: "var(--blue)" },
+        progress: "28%",
+      },
+      {
+        title: "3. Para hareketi atomik yazilir",
+        text: "Gonderen hesaptan para dusme ve alici hesaba para ekleme birlikte commit edilir. Biri basarisiz olursa ikisi de rollback edilmelidir.",
+        node: "db",
+        pos: { left: "59%", top: "210px", color: "var(--green)" },
+        progress: "48%",
+      },
+      {
+        title: "4. Audit ve outbox kaydi eklenir",
+        text: "Audit kaydi izlenebilirlik saglar. Outbox kaydi ise commit sonrasi yayinlanacak bildirimi guvenli sekilde saklar.",
+        node: "outbox",
+        pos: { left: "59%", top: "370px", color: "var(--amber)" },
+        progress: "68%",
+      },
+      {
+        title: "5. DB commit olur",
+        text: "Bu noktada veritabani degisiklikleri kalici hale gelir. Para hareketi, transfer kaydi ve outbox kaydi birlikte commit edilmistir.",
+        node: "db",
+        pos: { left: "66%", top: "260px", color: "var(--green)" },
+        progress: "84%",
+        commit: true,
+      },
+      {
+        title: "6. Dis bildirim commit sonrasinda gonderilir",
+        text: "SMS, email veya HTTP cagrisini DB transaction icinde yapmayiz. Cunku DB rollback, dis sisteme gonderilmis bir cagriyi geri alamaz.",
+        node: "external",
+        pos: { left: "83%", top: "285px", color: "var(--green)" },
+        progress: "100%",
+        rollbackWarning: true,
+      },
+    ];
+
+    let currentStep = 0;
+
+    const token = document.getElementById("moneyToken");
+    const progressBar = document.getElementById("progressBar");
+    const title = document.getElementById("stepTitle");
+    const text = document.getElementById("stepText");
+    const counter = document.getElementById("stepCounter");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const commitBadge = document.getElementById("commitBadge");
+    const rollbackBadge = document.getElementById("rollbackBadge");
+    const themeToggle = document.getElementById("themeToggle");
+    const nodes = Array.from(document.querySelectorAll("[data-node]"));
+
+    function renderStep() {
+      const step = steps[currentStep];
+      token.style.left = step.pos.left;
+      token.style.top = step.pos.top;
+      token.style.background = step.pos.color;
+      token.classList.remove("moving");
+      void token.offsetWidth;
+      token.classList.add("moving");
+
+      title.textContent = step.title;
+      text.textContent = step.text;
+      progressBar.style.width = step.progress;
+      counter.textContent = `Adim ${currentStep + 1} / ${steps.length}`;
+
+      nodes.forEach((node) => node.classList.toggle("active", node.dataset.node === step.node));
+      commitBadge.classList.toggle("visible", Boolean(step.commit));
+      rollbackBadge.classList.toggle("visible", Boolean(step.rollbackWarning));
+
+      prevBtn.disabled = currentStep === 0;
+      nextBtn.disabled = currentStep === steps.length - 1;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      currentStep = Math.max(0, currentStep - 1);
+      renderStep();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentStep = Math.min(steps.length - 1, currentStep + 1);
+      renderStep();
+    });
+
+    resetBtn.addEventListener("click", () => {
+      currentStep = 0;
+      renderStep();
+    });
+
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      themeToggle.textContent = theme === "dark" ? "Light mode" : "Dark mode";
+      localStorage.setItem("javaInterviewAnimationTheme", theme);
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+      applyTheme(currentTheme === "dark" ? "light" : "dark");
+    });
+
+    const savedTheme = localStorage.getItem("javaInterviewAnimationTheme");
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(savedTheme || (prefersDark ? "dark" : "light"));
+
+    renderStep();
+  </script>
+</body>
+</html>
