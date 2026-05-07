@@ -11,7 +11,8 @@ English is used alongside Turkish for interview questions, answers, screening te
 1. Read [AI_SESSION_CONTEXT.md](AI_SESSION_CONTEXT.md).
 2. Read [rules/STUDY_RULES.md](rules/STUDY_RULES.md).
 3. Check [progress/TOPIC_TRACKER.md](progress/TOPIC_TRACKER.md).
-4. Continue from the current topic and do not skip required outputs.
+4. Animation [animations/index.html](animations/index.html).
+5. Continue from the current topic and do not skip required outputs.
 
 ## Workspace Areas
 
